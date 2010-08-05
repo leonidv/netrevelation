@@ -1,0 +1,13 @@
+ 1:  novosm-user.gtk.su (93.157.123.16)                     0.125ms pmtu 1500
+ 1:  10.77.48.1 (10.77.48.1)                                2.003ms 
+ 1:  10.77.48.1 (10.77.48.1)                                1.993ms 
+ 2:  cs3560-ARK.gtk.su (93.157.120.209)                     3.762ms 
+ 3:  sh1.gtk.su (93.157.120.250)                            1.674ms 
+ 4:  cs7206-BM.gtk.su (93.157.120.245)                      2.841ms 
+ 5:  aurora-spb-ix.yandex.net (194.85.177.90)               2.887ms 
+ 6:  aluminium-vlan934.yandex.net (213.180.208.12)         13.516ms 
+ 7:  gallium-vlan901.yandex.net (77.88.56.126)             41.445ms 
+ 8:  hummer-vlan2.yandex.net (87.250.228.136)             127.497ms 
+ 9:  l3-s3200-s600.yandex.net (213.180.213.21)             13.595ms 
+10:  www.yandex.ru (87.250.251.3)                          14.901ms reached
+     Resume: pmtu 1500 hops 10 back 55 
