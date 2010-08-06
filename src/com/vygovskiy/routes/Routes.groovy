@@ -7,6 +7,10 @@ class Routes {
 
     def nodes = new HashMap<String,Node>()
 
+    def leftShift(InputStream input) {
+        addPath(input)
+    }
+
     def public addPath(InputStream input) {
         Node previousNode
         int level = 0;
@@ -47,7 +51,8 @@ class Routes {
     }
 
     def private  getNode(line, level) {
-        Node node = new Node(line)
+        Node node = Node.fromTracepath(line)
+
         if (!nodes[node.ip]) {
             nodes[node.ip] = node
             node.level = level
@@ -58,6 +63,10 @@ class Routes {
         return nodes[node.ip]
     }
 
+    def getNodes() {
+        SortedSet values = new TreeSet(nodes.values())        
+    }
+
     def private boolean containsIp(String line) {
         line =~ /(\d{1,3}\.){3}(\d{1,3})/
     }
@@ -66,11 +75,9 @@ class Routes {
     String toString() {
         def sb = new StringBuffer()
 
-        nodes.v
 
-        SortedSet values = new TreeSet(nodes.values())
 
-        values.each {node -> 
+        getNodes().each {node ->
             sb << "${node.level}. ${node.ip} (${node.name}) \n"
         }
 

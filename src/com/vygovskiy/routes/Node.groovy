@@ -1,18 +1,37 @@
 package com.vygovskiy.routes
 
 class Node implements Comparable {
+
+    public static fromNmap(String line) {
+        def String[] splitted = line.split()
+        Node node;
+        if (splitted.length == 7) {
+            // They has equals splitted position
+            node = fromTracepath(line)
+        } else {
+            // If nmap can't get name, he outputs nothing in second postion
+            node = new Node()
+            node.ip = splitted[1].replaceAll("[()]","")
+            node.name = node.ip
+        }
+        return node;
+    }
+
+    public static Node fromTracepath(String line) {
+        def String[] splitted = line.split()
+        Node node = new Node()
+        node.name = splitted[1]
+        node.ip = splitted[2].replaceAll("[()]","")
+
+        return node
+    }
+
     String name;
     String ip;
     int level;
     boolean boundary = false;
 
     Set<Node> linkedWith = new HashSet()
-
-    Node(String line) {
-        def String[] splitted = line.split()
-        name = splitted[1]
-        ip = splitted[2].replaceAll("[()]","")
-    }
 
     @Override
     String toString() {
