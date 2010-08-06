@@ -7,15 +7,15 @@ def trace(String address) {
 }
 
 def fromFile(String fileName) {
-    new File(fileName).newInputStream()
+    new File("traces/"+fileName+".trace").newInputStream()
 }
 
 
 def Routes routes = new Routes()
+
+routes.addPath(fromFile("vygovskiy.com") )
+routes.addPath(fromFile("home.leonidv.ru"))
 /*
-routes.addPath(fromFile("77.88.21.3.trace") )
-routes.addPath(fromFile("87.250.251.3.trace"))
-*/
 routes.addPath(trace("93.158.134.3") )
 routes.addPath(trace("77.88.21.3")   )
 routes.addPath(trace("213.180.204.3"))
