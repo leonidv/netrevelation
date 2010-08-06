@@ -1,4 +1,4 @@
-package lv
+package com.vygovskiy.routes
 
 class Node implements Comparable {
     String name;

@@ -3,9 +3,9 @@
  * and open the template in the editor.
  */
 
-package lv
+package com.vygovskiy.routes
 
-import lv.Node
+import com.vygovskiy.routes.Node
 
 class Link implements Comparable {
     Node a, b
@@ -18,6 +18,7 @@ class Link implements Comparable {
             this.a = b;
             this.b = a;
         }
+        
     }
 
     @Override

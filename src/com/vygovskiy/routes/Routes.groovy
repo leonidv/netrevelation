@@ -1,5 +1,7 @@
-import lv.Node
-import lv.Link
+package com.vygovskiy.routes
+
+import com.vygovskiy.routes.Node
+import com.vygovskiy.routes.Link
 
 class Routes {
 
@@ -71,8 +73,8 @@ class Routes {
         sb.toString()
     }
 
-   def Set links() {
-       def Set links = new TreeSet()
+   def Set<Link> links() {
+       def Set<Link> links = new TreeSet<Link>()
        nodes.values().each{Node a->
            a.linkedWith.each {b->
                links << new Link(a,b)
