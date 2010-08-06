@@ -18,7 +18,6 @@ class Link implements Comparable {
             this.a = b;
             this.b = a;
         }
-        
     }
 
     @Override
@@ -44,7 +43,12 @@ class Link implements Comparable {
         assert other != null
         assert other.class == this.class
 
-        a <=> other.a
+        def cmpr = (a <=> other.a)
+        if (cmpr == 0) {
+            cmpr = b <=> other.b
+        }
+
+        return cmpr
     }
 }
 

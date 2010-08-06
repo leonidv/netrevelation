@@ -12,14 +12,17 @@ def fromFile(String fileName) {
 
 
 def Routes routes = new Routes()
-
+/*
 routes.addPath(fromFile("77.88.21.3.trace") )
 routes.addPath(fromFile("87.250.251.3.trace"))
-/*
+*/
 routes.addPath(trace("93.158.134.3") )
 routes.addPath(trace("77.88.21.3")   )
 routes.addPath(trace("213.180.204.3"))
+routes.addPath(trace("vygovskiy.com"))
+routes.addPath(trace("skai-dev.ru"))
 
+/*
 routes.links().each{
     println "${it.a.level}. ${it.a.ip} - ${it.b.ip}"
 }
