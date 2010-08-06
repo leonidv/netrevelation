@@ -4,6 +4,8 @@ class Node implements Comparable {
     String name;
     String ip;
     int level;
+    boolean boundary = false;
+
     Set<Node> linkedWith = new HashSet()
 
     Node(String line) {

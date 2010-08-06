@@ -14,6 +14,7 @@ class Routes {
             printLine(line)
 
             if (!containsIp(line)) {
+                previousNode.boundary = (line =~ /Resume/)
                 return
             }
 
@@ -50,6 +51,9 @@ class Routes {
         if (!nodes[node.ip]) {
             nodes[node.ip] = node
             node.level = level
+            if (level == 0) {
+                node.boundary = true
+            }
         }
         return nodes[node.ip]
     }
