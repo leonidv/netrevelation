@@ -1,0 +1,13 @@
+ 1:  novosm-user.gtk.su (93.157.123.16)                     0.117ms pmtu 1500
+ 1:  10.77.48.1 (10.77.48.1)                                2.018ms 
+ 1:  10.77.48.1 (10.77.48.1)                                3.826ms 
+ 2:  cs3560-ARK.gtk.su (93.157.120.209)                    10.923ms 
+ 3:  sh1.gtk.su (93.157.120.250)                            2.186ms 
+ 4:  cs7206-BM.gtk.su (93.157.120.245)                      2.358ms 
+ 5:  te2-15-077.BRC4.spb.obit.ru (217.79.3.113)             2.471ms 
+ 6:  decix2-gw.hetzner.de (80.81.193.164)                  39.025ms asymm 11 
+ 7:  hos-bb1.juniper1.fs.hetzner.de (213.239.240.242)      44.503ms asymm 12 
+ 8:  hos-tr4.ex3k3.rz10.hetzner.de (213.239.227.228)       44.479ms asymm 12 
+ 9:  ovz14.fastvps.ru (188.40.52.149)                      44.751ms asymm 13 
+10:  static.3.165.40.188.clients.your-server.de (188.40.165.3)  44.672ms reached
+     Resume: pmtu 1500 hops 10 back 52 
