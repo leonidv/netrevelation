@@ -1,0 +1,16 @@
+ 1:  vygovskie.ru (188.40.165.3)                            0.146ms pmtu 1500
+ 1:  ovz14.fastvps.ru (188.40.52.149)                       0.050ms
+ 1:  ovz14.fastvps.ru (188.40.52.149)                       0.036ms
+ 2:  hos-tr2.juniper1.rz10.hetzner.de (213.239.227.161)     0.469ms asymm  4
+ 3:  hos-bb1.juniper2.ffm.hetzner.de (213.239.240.226)      5.126ms asymm  5
+ 4:  de-cix.citytelecom.ru (80.81.192.242)                  7.242ms asymm  5
+ 5:  te7-2-pontiac.stk.citytelecom.ru (217.65.1.229)       43.085ms asymm 10
+ 6:  te4-2-altera.spb.citytelecom.ru (217.65.1.193)        47.146ms asymm 10
+ 7:  te4-4-adelaida.spb.citytelecom.ru (217.65.1.201)     115.408ms asymm  8
+ 8:  nodex-gw.spb.citytelecom.ru (62.152.42.254)           43.465ms asymm  9
+ 9:  91.151.199.26 (91.151.199.26)                        140.166ms asymm  6
+10:  sh1.gtk.su (93.157.120.246)                           42.717ms asymm  7
+11:  dlMorskaya.gtk.su (93.157.120.249)                    43.491ms asymm  8
+12:  dlNovosm.gtk.su (93.157.120.210)                      43.716ms asymm  9
+13:  novosm-user.gtk.su (93.157.123.16)                    44.928ms reached
+     Resume: pmtu 1500 hops 13 back 55 
