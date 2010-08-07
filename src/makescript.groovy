@@ -9,16 +9,23 @@
  */
 
 import static com.vygovskiy.DataProvider.*
+import static java.lang.String.format as fmt
 
 import com.vygovskiy.routes.*
 import static com.vygovskiy.routes.Zones.*;
 
+final String OUTPUT_SCRIPT_NAME = "findtraces.sh"
+final int LINES_PER_SCRIPT = 100
+
 Zones zones = new Zones()
 
 Routes routes = new Routes()
-routes << fromFile("traces/vygovskiy.com.trace")
+["home.leonidv.ru","vygovskiy.com"].each{
+    routes << fromFile("traces/${it}.trace")
+}
 
-List<String> nets = new ArrayList<String>()
+
+Set<String> nets = new HashSet<String>()
 routes.getNodes().each{ node ->
     zone = zones.getZoneC(node.ip)
     int c = zone[2] & 0xff;
@@ -36,19 +43,48 @@ routes.getNodes().each{ node ->
 
 List<Node> nodes = new ArrayList<Node>()
 
-nets.each { net ->
-    println "Check net ${net}, please be patient..."
-    nodes += zones.getZonesNode(nmap(net))
+println "Total subnets to check: ${nets.size()}"
+
+nets.eachWithIndex { net, i ->
+def progress = i/nets.size()*100
+println "${fmt("%02.1f",progress)}% Check net ${net}, please be patient..."
+nodes += zones.getZonesNode(nmap(net))
 }
+ 
 
 //nodes += zones.getZonesNode(fromFile("traces/217.65.1.1-255.nmap"))
 
 
-PrintWriter writer = new File("traces.sh").newPrintWriter()
-
-nodes.each { node ->
-    s = "tracepath ${node.ip} > ${node.ip}.trace"
-    writer.println(s)    
+int scriptsCount = (int)(nodes.size() / LINES_PER_SCRIPT)+1
+def List<PrintWriter> writers = new ArrayList<PrintWriter>(scriptsCount)
+def List<String> scriptFiles = new ArrayList<String>()
+scriptsCount.times{ i->
+    def fileName = fmt("traces-%02d.sh",i)
+    writers[i] = new File(fileName).newPrintWriter()
+    scriptFiles << fileName
 }
 
-writer.close();
+println "Total ${nodes.size()} will be wrotten to ${scriptsCount} files"
+
+def writerIndex = -1;
+nodes.eachWithIndex { node, i ->
+    if (i % LINES_PER_SCRIPT == 0) {
+        writerIndex++
+    }
+    s = "tracepath ${node.ip} >> ${scriptFiles[writerIndex]}.out"
+    writers[writerIndex].println(s)
+}
+
+writers.each{
+    it.close()
+};
+
+writer = new File("traces-run.sh").newPrintWriter()
+scriptFiles.each {
+    writer.print("./${it} & ")
+}
+writer.println("\ncat traces-*.sh.out > traces.out")
+writer.close()
+
+"chmod +x traces-*.sh".execute()
+

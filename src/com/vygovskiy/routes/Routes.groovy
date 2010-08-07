@@ -7,6 +7,8 @@ class Routes {
 
     def nodes = new HashMap<String,Node>()
 
+    def List<String> keysNodes = new ArrayList<String>()
+
     def leftShift(InputStream input) {
         addPath(input)
     }
@@ -18,7 +20,9 @@ class Routes {
             printLine(line)
 
             if (!containsIp(line)) {
-                previousNode.boundary = (line =~ /Resume/)
+                if (line =~ /Resume/) {
+                    previousNode = null
+                }
                 return
             }
 
@@ -56,7 +60,7 @@ class Routes {
         if (!nodes[node.ip]) {
             nodes[node.ip] = node
             node.level = level
-            if (level == 0) {
+            if (node.ip  in keysNodes) {
                 node.boundary = true
             }
         }
@@ -64,7 +68,7 @@ class Routes {
     }
 
     def getNodes() {
-        SortedSet values = new TreeSet(nodes.values())        
+        new TreeSet(nodes.values())
     }
 
     def private boolean containsIp(String line) {
@@ -88,6 +92,9 @@ class Routes {
        def Set<Link> links = new TreeSet<Link>()
        nodes.values().each{Node a->
            a.linkedWith.each {b->
+               if (b.linkedWith.isEmpty()){
+                   return
+               }
                links << new Link(a,b)
            }
        }
