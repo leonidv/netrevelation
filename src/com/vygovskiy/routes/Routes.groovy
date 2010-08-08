@@ -5,9 +5,9 @@ import com.vygovskiy.routes.Link
 
 class Routes {
 
-    def nodes = new HashMap<String,Node>()
+    def Map<String,Node>nodesByIp = new HashMap<String,Node>()
 
-    def List<String> keysNodes = new ArrayList<String>()
+    def List<String> keyNodes = new ArrayList<String>()
 
     def leftShift(InputStream input) {
         addPath(input)
@@ -31,8 +31,15 @@ class Routes {
             if (node.equals(previousNode)) {
                 return
             }
-            if (previousNode != null) {
+
+            boolean cycle = previousNode in node.linkedWith
+            if (cycle) {
+                print "\u27F2"
+            }
+
+            if (!((previousNode == null) || (cycle))) {
                 previousNode.linkedWith << node
+                node.parents << previousNode
             }
 
             previousNode = node
@@ -57,18 +64,18 @@ class Routes {
     def private  getNode(line, level) {
         Node node = Node.fromTracepath(line)
 
-        if (!nodes[node.ip]) {
-            nodes[node.ip] = node
+        if (!nodesByIp[node.ip]) {
+            nodesByIp[node.ip] = node
             node.level = level
-            if (node.ip  in keysNodes) {
+            if (node.ip in keyNodes) {
                 node.boundary = true
             }
         }
-        return nodes[node.ip]
+        return nodesByIp[node.ip]
     }
 
-    def getNodes() {
-        new TreeSet(nodes.values())
+    def NavigableSet getNodes() {
+        new TreeSet(nodesByIp.values())
     }
 
     def private boolean containsIp(String line) {
@@ -78,9 +85,6 @@ class Routes {
     @Override
     String toString() {
         def sb = new StringBuffer()
-
-
-
         getNodes().each {node ->
             sb << "${node.level}. ${node.ip} (${node.name}) \n"
         }
@@ -88,17 +92,47 @@ class Routes {
         sb.toString()
     }
 
-   def Set<Link> links() {
-       def Set<Link> links = new TreeSet<Link>()
-       nodes.values().each{Node a->
-           a.linkedWith.each {b->
-               if (b.linkedWith.isEmpty()){
-                   return
-               }
-               links << new Link(a,b)
-           }
-       }
-       return links
+    def removeLeafs() {
+        def leafs = findLeafs(this.nodesByIp.values());
+       
+        while (!leafs.isEmpty()) {
+
+            println "[before] nodesByIp.size() = " + this.nodesByIp.size()
+            leafs.each{Node leaf ->
+                removeFromParent(leaf)
+                leaf.parents.clear()
+                nodesByIp.remove(leaf.ip)
+            }
+            println "[after ] nodesByIp.size() = " + this.nodesByIp.size()
+
+            leafs = findLeafs(this.nodesByIp.values())
+        }
+
+    }
+
+    def private findLeafs(nodesByIp) {
+       def result = nodesByIp.findAll{
+            it.linkedWith.isEmpty() && it.parents.size() == 1 &&
+                !(it.ip in keyNodes)
+        }
+        println "found leafs: ${result.size()}"
+        return result
+    }
+
+    def private removeFromParent(node) {
+        node.parents.each{ parent ->
+            parent.linkedWith.remove(node)
+        }
+    }
+
+    def Set<Link> links() {
+        def Set<Link> links = new TreeSet<Link>()
+        nodesByIp.values().each{Node a->
+            a.linkedWith.each {b->
+                links << new Link(a,b)
+            }
+        }
+        return links
     }
 }
 

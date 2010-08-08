@@ -31,11 +31,16 @@ class Node implements Comparable {
     int level;
     boolean boundary = false;
 
+    Set<Node> parents = new HashSet()
     Set<Node> linkedWith = new HashSet()
 
     @Override
     String toString() {
-        "Node [ip = ${ip}, name = ${name}, linkedWith = ${linkedWith}]"
+        def StringBuilder p = new StringBuilder()
+        parents.each { parent ->
+            p << "${parent.ip}"
+        }
+        "Node [ip = ${ip}, name = ${name}, parents = ${p}, linkedWith = ${linkedWith}]"
     }
 
     @Override
